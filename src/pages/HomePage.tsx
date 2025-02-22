@@ -1,5 +1,8 @@
 export default function HomePage() {
     return (
-        <p>TODO://</p>
+        <section className="homepage">
+            <h2>Active Notes</h2>
+            TODO: add note list
+        </section>
     )
 }
