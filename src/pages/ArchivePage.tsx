@@ -1,4 +1,4 @@
-import NotesList from "./NotesList.tsx";
+import NotesList from "../components/NotesList.tsx";
 import {Component} from "react";
 import {getArchivedNotes} from "../utils/data.ts";
 
