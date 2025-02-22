@@ -1,5 +1,9 @@
+import {MdAdd} from "react-icons/md";
+
 export default function AddNoteButton() {
     return (
-        <p>TODO:</p>
+        <button className="action" type="button" title='Add Note'>
+            <MdAdd/>
+        </button>
     )
 }
