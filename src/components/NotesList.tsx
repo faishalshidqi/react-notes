@@ -4,11 +4,9 @@ export default function NotesList({notes}: {notes: {id: string, title: string, b
     return (
         <section className="notes-list">
             {
-                notes.map((note) => {
-                    return (
-                        <NoteItem {...note} key={note.id}/>
-                    )
-                })
+                notes.map((note) => (
+                    <NoteItem {...note} key={note.id}/>
+                ))
             }
         </section>
     )
