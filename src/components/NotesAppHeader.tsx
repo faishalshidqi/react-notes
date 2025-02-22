@@ -1,16 +1,13 @@
+import Navigation from "./Navigation.tsx";
+import {Link} from "react-router-dom";
+
 export default function NotesAppHeader() {
     return (
         <header>
             <h1>
-                <a href='/'>Notes App</a>
+                <Link to='/'>Notes App</Link>
             </h1>
-            <nav className='navigation'>
-                <ul>
-                    <li>
-                        <a href='/archives'>Archive</a>
-                    </li>
-                </ul>
-            </nav>
+            <Navigation/>
         </header>
     )
 }
