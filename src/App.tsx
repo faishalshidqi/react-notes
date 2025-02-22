@@ -1,5 +1,5 @@
 import './App.css'
-import NotesApp from "./NotesApp.tsx";
+import NotesApp from "./components/NotesApp.tsx";
 
 function App() {
   return <NotesApp/>
