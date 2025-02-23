@@ -3,6 +3,7 @@ import HomePage from "../pages/HomePage.tsx";
 import {Route, Routes} from "react-router-dom";
 import ArchivePage from "../pages/ArchivePage.tsx";
 import DetailPageWrapper from "../pages/NoteDetailPage.tsx";
+import AddNotePage from "../pages/AddNotePage.tsx";
 
 export default function NotesApp() {
     return (
@@ -13,6 +14,7 @@ export default function NotesApp() {
                     <Route path='/' element={<HomePage/>} />
                     <Route path='/archives' element={<ArchivePage/>} />
                     <Route path='/notes/:id' element={<DetailPageWrapper/>} />
+                    <Route path='/notes/new' element={<AddNotePage/>}/>
                 </Routes>
             </main>
         </div>
