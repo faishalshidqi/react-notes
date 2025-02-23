@@ -1,4 +1,6 @@
-export default function NoteDetail({title, body, createdAt}: {title: string, body: string, createdAt: string}) {
+import DeleteButton from "./DeleteButton.tsx";
+
+export default function NoteDetail({id, title, body, createdAt}: {id: string, title: string, body: string, createdAt: string}) {
     return (
         <>
             <h3 className='detail-page__title'>{title}</h3>
