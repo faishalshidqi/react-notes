@@ -1,15 +1,22 @@
 import NoteDetail from "../components/NoteDetail.tsx";
 import {Component} from "react";
 import {deleteNote, getNote} from "../utils/data.ts"
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function DetailPageWrapper() {
     const {id} = useParams()
-    return <DetailPage id={id ?? ''}/>
+    const navigate = useNavigate()
+    function onDeleteHandler() {
+        if (id != null) {
+            deleteNote(id)
+        }
+        navigate('/')
+    }
+    return <DetailPage id={id ?? ''} onDelete={onDeleteHandler} />
 }
 
-class DetailPage extends Component<{id: string}, {note: {id: string, title: string, body: string, createdAt: string, archived: boolean}|undefined}> {
-    constructor(props: {id: string}) {
+class DetailPage extends Component<{id: string, onDelete: (id: string) => void}, {note: {id: string, title: string, body: string, createdAt: string, archived: boolean}|undefined}> {
+    constructor(props: {id: string, onDelete: (id: string) => void}) {
         super(props)
         this.state = {
             note: getNote(props.id)
@@ -17,7 +24,7 @@ class DetailPage extends Component<{id: string}, {note: {id: string, title: stri
         this.onDeleteHandler = this.onDeleteHandler.bind(this)
     }
     onDeleteHandler(id: string) {
-        deleteNote(id)
+        this.props.onDelete(id)
     }
     render() {
         return (
