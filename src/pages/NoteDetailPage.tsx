@@ -17,7 +17,7 @@ class DetailPage extends Component<{id: string}, {note: {id: string, title: stri
     }
     render() {
         return (
-            <section>
+            <section className="detail-page">
                 <NoteDetail title={this.state.note?.title ?? ''} body={this.state.note?.body ?? ''} createdAt={this.state.note?.createdAt ?? ''} />
             </section>
         )
