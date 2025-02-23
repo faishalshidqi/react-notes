@@ -1,6 +1,6 @@
 import NoteDetail from "../components/NoteDetail.tsx";
 import {Component} from "react";
-import {getNote} from "../utils/data.ts"
+import {deleteNote, getNote} from "../utils/data.ts"
 import {useParams} from "react-router-dom";
 
 export default function DetailPageWrapper() {
@@ -14,11 +14,15 @@ class DetailPage extends Component<{id: string}, {note: {id: string, title: stri
         this.state = {
             note: getNote(props.id)
         }
+        this.onDeleteHandler = this.onDeleteHandler.bind(this)
+    }
+    onDeleteHandler(id: string) {
+        deleteNote(id)
     }
     render() {
         return (
             <section className="detail-page">
-                <NoteDetail id={this.state.note?.id ?? ''} title={this.state.note?.title ?? ''} body={this.state.note?.body ?? ''} createdAt={this.state.note?.createdAt ?? ''} archived={this.state.note?.archived ?? false} />
+                <NoteDetail onDelete={this.onDeleteHandler} id={this.state.note?.id ?? ''} title={this.state.note?.title ?? ''} body={this.state.note?.body ?? ''} createdAt={this.state.note?.createdAt ?? ''} archived={this.state.note?.archived ?? false} />
             </section>
         )
     }
