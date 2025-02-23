@@ -1,23 +1,17 @@
 import NoteInput from "../components/NoteInput.tsx"
-import {Component} from "react"
 import {addNote} from "../utils/data.ts";
+import {useNavigate} from "react-router-dom";
 
-export default class AddNotePage extends Component<unknown, unknown> {
-    constructor(props: unknown) {
-        super(props)
-        this.onAddNoteHandler = this.onAddNoteHandler.bind(this)
+export default function AddNotePage() {
+    const navigate = useNavigate()
+    const onAddNoteHandler = ({title, body}: {title: string, body: string}): void => {
+        addNote({title, body})
+        navigate('/')
     }
-    onAddNoteHandler = ({title, body}: {title: string, body: string}): void => {
-        this.setState(() => {
-            addNote({title, body})
-        })
-    }
-    render() {
-        return (
-            <div className='add-new-page'>
-                <h2>Add Note</h2>
-                <NoteInput addNote={this.onAddNoteHandler} />
-            </div>
-        )
-    }
+    return (
+        <div className='add-new-page'>
+            <h2>Add Note</h2>
+            <NoteInput addNote={onAddNoteHandler} />
+        </div>
+    )
 }

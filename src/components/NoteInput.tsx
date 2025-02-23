@@ -20,8 +20,8 @@ export default class NoteInput extends Component<{addNote: ({title, body}: {titl
             this.setState(() => ({title: event.target.value}))
         }
     }
-    onBodyChangeEventHandler = (event: { target: { innerHTML: string } }) => {
-        this.setState(() => ({body: event.target.innerHTML}))
+    onBodyChangeEventHandler = (event: { target: { value: string; }; } ) => {
+        this.setState(() => ({body: event.target.value}))
     }
     onSubmit = (event: {preventDefault: () => void}) => {
         event.preventDefault()
@@ -30,10 +30,10 @@ export default class NoteInput extends Component<{addNote: ({title, body}: {titl
     }
     render() {
         return (
-            <form>
+            <form onSubmit={this.onSubmit}>
                 <div className='add-new-page__input'>
-                    <input className='add-new-page__input__title' placeholder='Judul Catatan'/>
-                    <div className='add-new-page__input__body' data-placeholder='Konten Catatan' contentEditable></div>
+                    <input className='add-new-page__input__title' placeholder='Judul Catatan' required value={this.state.title} onChange={this.onTitleChangeEventHandler} type='text' />
+                    <textarea className='add-new-page__input__body' placeholder='Konten Catatan' required value={this.state.body} onChange={this.onBodyChangeEventHandler} typeof='text'></textarea>
                     <div className='add-new-page__action'>
                         <SendButton/>
                     </div>
