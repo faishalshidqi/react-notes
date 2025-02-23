@@ -1,5 +1,9 @@
+import NoteInput from "../components/NoteInput.tsx";
+
 export default function AddNotePage() {
     return (
-        <p>TODO:</p>
+        <div className='add-new-page'>
+            <NoteInput />
+        </div>
     )
 }
