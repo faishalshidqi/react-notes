@@ -1,4 +1,5 @@
 import DeleteButton from "./DeleteButton.tsx";
+import ArchiveButton from "./ArchiveButton.tsx";
 
 export default function NoteDetail({id, title, body, createdAt}: {id: string, title: string, body: string, createdAt: string}) {
     return (
@@ -7,6 +8,7 @@ export default function NoteDetail({id, title, body, createdAt}: {id: string, ti
             <p className='detail-page__createdAt'>{createdAt}</p>
             <div className='detail-page__body'>{body}</div>
             <div className='detail-page__action'>
+                <ArchiveButton id={id}/>
                 <DeleteButton id={id}/>
             </div>
         </>
