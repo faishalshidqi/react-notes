@@ -1,6 +1,6 @@
 import NoteDetail from "../components/NoteDetail.tsx";
 import {Component} from "react";
-import {archiveNote, deleteNote, getNote} from "../utils/data.ts"
+import {archiveNote, deleteNote, getNote, unarchiveNote} from "../utils/data.ts"
 import {useNavigate, useParams} from "react-router-dom";
 
 export default function DetailPageWrapper() {
@@ -14,7 +14,12 @@ export default function DetailPageWrapper() {
     }
     function onArchiveHandler() {
         if (id != null) {
-            archiveNote(id)
+            const note = getNote(id)
+            if (!note!.archived) {
+                archiveNote(id)
+            } else {
+                unarchiveNote(id)
+            }
         }
         navigate('/')
     }

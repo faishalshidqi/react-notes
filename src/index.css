@@ -1,3 +1,37 @@
+.note-item__action {
+  display: flex;
+  padding-top: 10px;
+}
+
+.note-item__delete-button,.note-item__archive-button {
+  display: block;
+  width: 100%;
+  background-color: transparent;
+  border: 0;
+  border-top: 1px solid #aaa;
+  padding: 8px 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.note-item__delete-button {
+  border-right: 1px solid #aaa;
+  color: #ff5f52;
+}
+
+.note-item__archive-button {
+  color: #fff263;
+}
+
+.note-item__archive-button:hover {
+  color: #c49000;
+}
+
+.note-item__delete-button:hover {
+  color: #b00020;
+}
+
 :root {
   --primary: #BB86FC;
   --primary-variant: #3700B3;
@@ -150,6 +184,7 @@ main {
   border-radius: 50px;
   background-color: var(--on-background);
   color: var(--background);
+  margin: 10px;
   padding: 8px;
   cursor: pointer;
 }
