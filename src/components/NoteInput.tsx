@@ -5,7 +5,7 @@ export default function NoteInput() {
         <>
             <div className='add-new-page__input'>
                 <input className='add-new-page__input__title' placeholder='Judul Catatan' />
-                <div className='add-new-page__input__body' data-placeholder='Judul Catatan' contentEditable></div>
+                <div className='add-new-page__input__body' data-placeholder='Konten Catatan' contentEditable></div>
                 <div className='add-new-page__action'>
                     <SendButton/>
                 </div>
