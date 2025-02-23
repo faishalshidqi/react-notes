@@ -12,8 +12,8 @@ export default function NoteItem({id, title, body, createdAt, archived, onDelete
             <p className='note-item__createdAt'>{showFormattedDate(createdAt)}</p>
             <p className='note-item__body'>{body}</p>
             <div className='note-item__action'>
-                <DeleteButton onDelete={() => onDelete(id)} id={id}></DeleteButton>
                 <ArchiveButton onArchive={() => onArchive(id)} id={id} archived={archived}></ArchiveButton>
+                <DeleteButton onDelete={() => onDelete(id)} id={id}></DeleteButton>
             </div>
         </article>
     )
