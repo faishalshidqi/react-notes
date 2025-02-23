@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 
 export default function Navigation() {
     return <nav className="navigation">
@@ -7,5 +7,5 @@ export default function Navigation() {
                 <Link to="/archives">Archive</Link>
             </li>
         </ul>
-    </nav>;
+    </nav>
 }

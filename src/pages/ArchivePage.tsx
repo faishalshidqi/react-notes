@@ -1,15 +1,15 @@
-import NotesList from "../components/NotesList.tsx";
-import {Component} from "react";
-import {deleteNote, getArchivedNotes, unarchiveNote} from "../utils/data.ts";
+import NotesList from "../components/NotesList.tsx"
+import {Component} from "react"
+import {deleteNote, getArchivedNotes, unarchiveNote} from "../utils/data.ts"
 
 export default class ArchivePage extends Component<unknown, {notes: {id: string, title: string, body: string, createdAt: string, archived: boolean}[]}> {
     constructor(props: unknown) {
-        super(props);
+        super(props)
         this.state = {
             notes: getArchivedNotes()
         }
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onArchiveHandler = this.onArchiveHandler.bind(this);
+        this.onDeleteHandler = this.onDeleteHandler.bind(this)
+        this.onArchiveHandler = this.onArchiveHandler.bind(this)
     }
     onDeleteHandler(id: string){
         deleteNote(id)

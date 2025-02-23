@@ -1,4 +1,4 @@
-import NoteInput from "../components/NoteInput.tsx";
+import NoteInput from "../components/NoteInput.tsx"
 
 export default function AddNotePage() {
     return (

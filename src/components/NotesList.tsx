@@ -1,4 +1,4 @@
-import NoteItem from "./NoteItem.tsx";
+import NoteItem from "./NoteItem.tsx"
 
 export default function NotesList({notes, onDelete, onArchive}: {notes: {id: string, title: string, body: string, createdAt: string, archived: boolean}[], onArchive: (id: string) => void, onDelete: (id: string) => void}) {
     if (notes.length === 0) {

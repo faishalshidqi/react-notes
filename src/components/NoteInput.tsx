@@ -1,4 +1,4 @@
-import SendButton from "./SendButton.tsx";
+import SendButton from "./SendButton.tsx"
 
 export default function NoteInput() {
     return (
