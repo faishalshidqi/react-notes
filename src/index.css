@@ -184,7 +184,7 @@ main {
   border-radius: 50px;
   background-color: var(--on-background);
   color: var(--background);
-  margin: 10px;
+  margin: 8px;
   padding: 8px;
   cursor: pointer;
 }
