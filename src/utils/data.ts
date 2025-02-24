@@ -104,7 +104,7 @@ function editNote({ id, title, body }: {id: string; title: string; body: string 
 }
 
 const showFormattedDate = (date: string) => {
-    return new Date(date).toLocaleDateString('id-ID', {
+    return new Date(date).toLocaleDateString('en-US', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
