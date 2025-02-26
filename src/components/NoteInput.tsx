@@ -1,8 +1,8 @@
-import SendButton from "./SendButton.tsx"
-import {Component} from "react"
+import SendButton from './SendButton.tsx'
+import {Component} from 'react'
 
 export default class NoteInput extends Component<{addNote: ({title, body}: {title: string, body: string}) => void}, {id: string, title: string, body: string, createdAt: string, archived: boolean}> {
-    constructor(props: { addNote: ({ title, body }: { title: string; body: string }) => void }) {
+    constructor(props: { addNote: ({ title, body }: { title: string, body: string }) => void }) {
         super(props)
         this.state = {
             id: '',
@@ -20,7 +20,7 @@ export default class NoteInput extends Component<{addNote: ({title, body}: {titl
             this.setState(() => ({title: event.target.value}))
         }
     }
-    onBodyChangeEventHandler = (event: { target: { value: string; }; } ) => {
+    onBodyChangeEventHandler = (event: { target: { value: string } } ) => {
         this.setState(() => ({body: event.target.value}))
     }
     onSubmit = (event: {preventDefault: () => void}) => {

@@ -1,6 +1,6 @@
-import DeleteButton from "./DeleteButton.tsx"
-import ArchiveButton from "./ArchiveButton.tsx"
-import {showFormattedDate} from "../utils/data.ts"
+import DeleteButton from './DeleteButton.tsx'
+import ArchiveButton from './ArchiveButton.tsx'
+import {showFormattedDate} from '../utils/data.ts'
 
 export default function NoteDetail({id, title, body, createdAt, archived, onDelete, onArchive}: {id: string, title: string, body: string, createdAt: string, archived: boolean, onDelete: (id: string) => void, onArchive: (id: string) => void}) {
     return (

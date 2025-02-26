@@ -41,10 +41,10 @@ let notes = [
         createdAt: '2022-04-14T04:27:34.572Z',
         archived: false,
     },
-];
+]
 
 function getAllNotes() {
-    return notes;
+    return notes
 }
 
 function getNote(id: string) {
@@ -52,55 +52,55 @@ function getNote(id: string) {
 }
 
 function getActiveNotes() {
-    return notes.filter((note) => !note.archived);
+    return notes.filter((note) => !note.archived)
 }
 
 function getArchivedNotes() {
-    return notes.filter((note) => note.archived);
+    return notes.filter((note) => note.archived)
 }
 
-function addNote({ title, body }: { title: string; body: string }) {
+function addNote({ title, body }: { title: string, body: string }) {
     notes = [...notes, {
         id: `notes-${+new Date()}`, title: title || '(untitled)', body, createdAt: new Date().toISOString(), archived: false,
-    }];
+    }]
 }
 
 function deleteNote(id: string) {
-    notes = notes.filter((note) => note.id !== id);
+    notes = notes.filter((note) => note.id !== id)
 }
 
 function archiveNote(id: string) {
     notes = notes.map((note) => {
         if (note.id === id) {
-            return { ...note, archived: true };
+            return { ...note, archived: true }
         }
-        return note;
-    });
+        return note
+    })
 }
 
 function unarchiveNote(id: string) {
     notes = notes.map((note) => {
         if (note.id === id) {
-            return { ...note, archived: false };
+            return { ...note, archived: false }
         }
 
-        return note;
-    });
+        return note
+    })
 }
 
-function editNote({ id, title, body }: {id: string; title: string; body: string }) {
+function editNote({ id, title, body }: {id: string, title: string, body: string }) {
     const noteToEdit = notes.find((note) => note.id === id)
     if (noteToEdit !== undefined) {
-        noteToEdit!.title = title;
-        noteToEdit!.body = body;
+        noteToEdit!.title = title
+        noteToEdit!.body = body
     }
 
     notes = notes.map((note) => {
         if (note.id === id) {
-            return note;
+            return note
         }
-        return note;
-    });
+        return note
+    })
 }
 
 const showFormattedDate = (date: string) => {
@@ -109,8 +109,8 @@ const showFormattedDate = (date: string) => {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-    });
-};
+    })
+}
 
 export {
     getAllNotes,
@@ -123,4 +123,4 @@ export {
     unarchiveNote,
     addNote,
     showFormattedDate,
-};
+}
