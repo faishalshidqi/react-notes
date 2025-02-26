@@ -1,11 +1,11 @@
-import {showFormattedDate} from "../utils/data.ts"
-import {Link} from "react-router-dom"
-import DeleteButton from "./DeleteButton.tsx"
-import ArchiveButton from "./ArchiveButton.tsx"
+import {showFormattedDate} from '../utils/data.ts'
+import {Link} from 'react-router-dom'
+import DeleteButton from './DeleteButton.tsx'
+import ArchiveButton from './ArchiveButton.tsx'
 
 export default function NoteItem({id, title, body, createdAt, archived, onDelete, onArchive}: {id: string, title: string, body: string, createdAt: string, archived: boolean, onDelete: (id: string) => void, onArchive: (id: string) => void}) {
     return (
-        <article className="note-item">
+        <article className='note-item'>
             <h3 className='note-item__title'>
                 <Link to={`/notes/${id}`}>{title}</Link>
             </h3>

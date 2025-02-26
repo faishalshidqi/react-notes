@@ -1,6 +1,6 @@
-import NoteInput from "../components/NoteInput.tsx"
-import {addNote} from "../utils/data.ts";
-import {useNavigate} from "react-router-dom";
+import NoteInput from '../components/NoteInput.tsx'
+import {addNote} from '../utils/data.ts'
+import {useNavigate} from 'react-router-dom'
 
 export default function AddNotePage() {
     const navigate = useNavigate()

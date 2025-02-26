@@ -1,7 +1,7 @@
-import NoteDetail from "../components/NoteDetail.tsx"
-import {Component} from "react"
-import {archiveNote, deleteNote, getNote, unarchiveNote} from "../utils/data.ts"
-import {useNavigate, useParams} from "react-router-dom"
+import NoteDetail from '../components/NoteDetail.tsx'
+import {Component} from 'react'
+import {archiveNote, deleteNote, getNote, unarchiveNote} from '../utils/data.ts'
+import {useNavigate, useParams} from 'react-router-dom'
 
 export default function DetailPageWrapper() {
     const {id} = useParams()
@@ -43,7 +43,7 @@ class DetailPage extends Component<{id: string, onDelete: (id: string) => void, 
     }
     render() {
         return (
-            <section className="detail-page">
+            <section className='detail-page'>
                 <NoteDetail onArchive={this.onArchiveHandler} onDelete={this.onDeleteHandler} id={this.state.note?.id ?? ''} title={this.state.note?.title ?? ''} body={this.state.note?.body ?? ''} createdAt={this.state.note?.createdAt ?? ''} archived={this.state.note?.archived ?? false} />
             </section>
         )
