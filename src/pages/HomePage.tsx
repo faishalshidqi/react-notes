@@ -27,7 +27,7 @@ export default class HomePage extends Component<unknown, { notes: { id: string, 
         this.setState(() => {
             return {
                 notes: data,
-                loading: true
+                loading: false
             }
         })
 
