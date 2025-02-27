@@ -7,7 +7,6 @@ import {MdGTranslate} from "react-icons/md";
 
 export default function Navigation({onLogout}: {onLogout: () => void}) {
     const locale = useContext(LocaleContext)
-    console.log(locale.locale)
     return (
         <nav className='navigation'>
             <ul>

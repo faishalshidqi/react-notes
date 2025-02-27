@@ -25,7 +25,6 @@ export default function NotesApp() {
             locale: localStorage.getItem('locale') || 'en',
             toggleLocale: () => {
                 const newLocale = localStorage.getItem('locale') === 'en' ? 'id' : 'en'
-                console.log(`Locale: ${newLocale}`)
                 localStorage.setItem('locale', newLocale)
                 setLocale(newLocale)
             }
