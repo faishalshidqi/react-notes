@@ -9,7 +9,7 @@ import {useState, useEffect, useMemo} from 'react'
 import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
 import {getUserLogged, putAccessToken} from '../utils/data.ts'
-import UserAuthContext, {UserAuthProvider} from '../contexts/UserAuthContext.ts'
+import {UserAuthProvider} from '../contexts/UserAuthContext.ts'
 import {LocaleProvider} from "../contexts/LocaleContext.ts";
 
 export default function NotesApp() {
@@ -66,7 +66,7 @@ export default function NotesApp() {
 
     const authed = (
         <LocaleProvider value={localeContextValue}>
-            <UserAuthContext.Provider value={user}>
+            <UserAuthProvider value={user}>
                 <div className='app-container'>
                     <NotesAppHeader onLogout={onLogout} />
                     <main>
@@ -79,7 +79,7 @@ export default function NotesApp() {
                         </Routes>
                     </main>
                 </div>
-            </UserAuthContext.Provider>
+            </UserAuthProvider>
         </LocaleProvider>
     )
 
