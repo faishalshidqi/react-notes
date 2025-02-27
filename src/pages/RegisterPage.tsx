@@ -12,7 +12,7 @@ export default function RegisterPage() {
         if (!error) navigate('/')
     }
 
-    function ret({heading, linkQuestion, linkMessage}: {heading: string, linkQuestion: string, linkMessage: string}) {
+    function returnComponent({heading, linkQuestion, linkMessage}: {heading: string, linkQuestion: string, linkMessage: string}) {
         return (
             <section className={'register-page'}>
                 <h2>{heading}</h2>
@@ -22,8 +22,8 @@ export default function RegisterPage() {
         )
     }
 
-    const enRet = ret({heading: 'Fill the form to register an account!', linkQuestion: 'Already have an account?', linkMessage: 'Login Here'})
-    const idRet = ret({heading: 'Isi form berikut untuk mendaftarkan akun!', linkQuestion: 'Sudah punya akun?', linkMessage: 'Login Di Sini'})
+    const enRet = returnComponent({heading: 'Fill the form to register an account!', linkQuestion: 'Already have an account?', linkMessage: 'Login Here'})
+    const idRet = returnComponent({heading: 'Isi form berikut untuk mendaftarkan akun!', linkQuestion: 'Sudah punya akun?', linkMessage: 'Login Di Sini'})
 
     return localeContext.locale === 'en' ? enRet : idRet
 }
