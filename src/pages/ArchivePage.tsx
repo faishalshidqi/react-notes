@@ -2,6 +2,7 @@ import NotesList from '../components/NotesList.tsx'
 import {Component} from 'react'
 import {deleteNote, getArchivedNotes, unarchiveNote} from '../utils/data.ts'
 import SearchBar from '../components/SearchBar.tsx'
+import Loading from '../components/Loading.tsx'
 
 export default class ArchivePage extends Component<unknown, {notes: {id: string, title: string, body: string, createdAt: string, archived: boolean}[], keyword: string, loading: boolean}> {
     constructor(props: unknown) {
@@ -33,7 +34,8 @@ export default class ArchivePage extends Component<unknown, {notes: {id: string,
         const {data} = await getArchivedNotes()
         this.setState(() => {
             return {
-                notes: data
+                notes: data,
+                loading: false
             }
         })
     }
@@ -42,12 +44,16 @@ export default class ArchivePage extends Component<unknown, {notes: {id: string,
         const {data} = await getArchivedNotes()
         this.setState(() => {
             return {
-                notes: data
+                notes: data,
+                loading: false
             }
         })
     }
 
     render() {
+        if (this.state.loading) {
+            return <Loading/>
+        }
         const notes = this.state.notes.filter(note => note.title.toLowerCase().includes(this.state.keyword.toLowerCase()))
         return (
             <section className='archives-page'>
