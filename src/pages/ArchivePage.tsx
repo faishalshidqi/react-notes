@@ -3,12 +3,13 @@ import {Component} from 'react'
 import {deleteNote, getArchivedNotes, unarchiveNote} from '../utils/data.ts'
 import SearchBar from '../components/SearchBar.tsx'
 
-export default class ArchivePage extends Component<unknown, {notes: {id: string, title: string, body: string, createdAt: string, archived: boolean}[], keyword: string}> {
+export default class ArchivePage extends Component<unknown, {notes: {id: string, title: string, body: string, createdAt: string, archived: boolean}[], keyword: string, loading: boolean}> {
     constructor(props: unknown) {
         super(props)
         this.state = {
             notes: [],
             keyword: '',
+            loading: true,
         }
         this.onDeleteHandler = this.onDeleteHandler.bind(this)
         this.onArchiveHandler = this.onArchiveHandler.bind(this)
@@ -22,7 +23,8 @@ export default class ArchivePage extends Component<unknown, {notes: {id: string,
         const {data} = await getArchivedNotes()
         this.setState(() => {
             return {
-                notes: data
+                notes: data,
+                loading: false
             }
         })
     }
