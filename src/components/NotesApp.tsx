@@ -19,6 +19,7 @@ export default function NotesApp() {
     }
     useEffect(() => {
         getUserLogged().then(({error, data}) => {
+            if (error) (setUser({id: '', name: '', email: ''}))
             if (!error) setUser(data)
         })
     }, [])
