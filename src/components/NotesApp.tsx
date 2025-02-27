@@ -5,12 +5,18 @@ import ArchivePage from '../pages/ArchivePage.tsx'
 import DetailPageWrapper from '../pages/NoteDetailPage.tsx'
 import AddNotePage from '../pages/AddNotePage.tsx'
 import NotFoundPage from '../pages/NotFoundPage.tsx'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
+import {getUserLogged} from "../utils/data.ts";
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
+    useEffect(() => {
+        getUserLogged().then(({error, data}) => {
+            if (!error) setUser(data)
+        })
+    }, [])
 
     if (user.id === '') {
         return (
@@ -25,20 +31,20 @@ export default function NotesApp() {
                 </main>
             </div>
         )
+    } else {
+        return (
+            <div className='app-container'>
+                <NotesAppHeader />
+                <main>
+                    <Routes>
+                        <Route path='/' element={<HomePage/>} />
+                        <Route path='/archives' element={<ArchivePage/>} />
+                        <Route path='/notes/:id' element={<DetailPageWrapper/>} />
+                        <Route path='/notes/new' element={<AddNotePage/>}/>
+                        <Route path='*' element={<NotFoundPage/>}/>
+                    </Routes>
+                </main>
+            </div>
+        )
     }
-
-    return (
-        <div className='app-container'>
-            <NotesAppHeader />
-            <main>
-                <Routes>
-                    <Route path='/' element={<HomePage/>} />
-                    <Route path='/archives' element={<ArchivePage/>} />
-                    <Route path='/notes/:id' element={<DetailPageWrapper/>} />
-                    <Route path='/notes/new' element={<AddNotePage/>}/>
-                    <Route path='*' element={<NotFoundPage/>}/>
-                </Routes>
-            </main>
-        </div>
-    )
 }
