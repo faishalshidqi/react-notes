@@ -160,8 +160,8 @@ async function deleteNote(id: string) {
     return { error: false, data: responseJson.data }
 }
 
-const showFormattedDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
+const showFormattedDate = (date: string, localeString: string) => {
+    return new Date(date).toLocaleDateString(localeString, {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
