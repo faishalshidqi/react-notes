@@ -11,10 +11,12 @@ import RegisterPage from '../pages/RegisterPage.tsx'
 import {getUserLogged, putAccessToken} from '../utils/data.ts'
 import {UserAuthProvider} from '../contexts/UserAuthContext.ts'
 import {LocaleProvider} from "../contexts/LocaleContext.ts";
+import {ThemeProvider} from "../contexts/ThemeContext.ts";
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
     const [locale, setLocale] = useState<string>('en')
+    const [theme, setTheme] = useState<string>('light')
     const userAuthContextValue = useMemo(() => {
         return {
             user
@@ -30,6 +32,16 @@ export default function NotesApp() {
             }
         }
     }, [locale])
+    const themeContextValue = useMemo(() => {
+        return {
+            theme: localStorage.getItem('theme') || 'light',
+            toggleTheme: () => {
+                const newTheme = localStorage.getItem('theme') === 'light' ? 'dark' : 'light'
+                localStorage.setItem('theme', newTheme)
+                setTheme(newTheme)
+            }
+        }
+    }, [theme])
     async function onSuccessLogin({accessToken}: {accessToken: string}) {
         putAccessToken(accessToken)
         const {data} = await getUserLogged()
@@ -48,20 +60,22 @@ export default function NotesApp() {
     }, [])
 
     const not_authed = (
-        <LocaleProvider value={localeContextValue}>
-            <UserAuthProvider value={userAuthContextValue.user}>
-                <div className='app-container'>
-                    <NotesAppHeader onLogout={onLogout} />
-                    <main>
-                        <Routes>
-                            <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
-                            <Route path='/register' element={<RegisterPage/>} />
-                            <Route path='*' element={<NotFoundPage/>}/>
-                        </Routes>
-                    </main>
-                </div>
-            </UserAuthProvider>
-        </LocaleProvider>
+        <ThemeProvider value={themeContextValue}>
+            <LocaleProvider value={localeContextValue}>
+                <UserAuthProvider value={userAuthContextValue.user}>
+                    <div className='app-container'>
+                        <NotesAppHeader onLogout={onLogout} />
+                        <main>
+                            <Routes>
+                                <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
+                                <Route path='/register' element={<RegisterPage/>} />
+                                <Route path='*' element={<NotFoundPage/>}/>
+                            </Routes>
+                        </main>
+                    </div>
+                </UserAuthProvider>
+            </LocaleProvider>
+        </ThemeProvider>
     )
 
     const authed = (
