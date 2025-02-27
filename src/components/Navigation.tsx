@@ -18,10 +18,10 @@ export default function Navigation({onLogout}: {onLogout: () => void}) {
                     <a onClick={locale.toggleLocale}><MdGTranslate/></a>
                 </li>
                 <li>
-                    <Link to='/archives'><FaArchive/></Link>
+                    <a onClick={themeContext.toggleTheme}>{themeContext.theme === 'light' ? <FaSun/> : <FaMoon/>}</a>
                 </li>
                 <li>
-                    <a onClick={themeContext.toggleTheme}>{themeContext.theme === 'light' ? <FaSun/> : <FaMoon/>}</a>
+                    <Link to='/archives'><FaArchive/></Link>
                 </li>
                 <li>
                     <a onClick={onLogout}><FiLogOut/></a>
