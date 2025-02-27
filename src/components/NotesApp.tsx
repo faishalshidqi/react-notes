@@ -12,11 +12,13 @@ import {getUserLogged, putAccessToken} from '../utils/data.ts'
 import {UserAuthProvider} from '../contexts/UserAuthContext.ts'
 import {LocaleProvider} from '../contexts/LocaleContext.ts'
 import {ThemeProvider} from '../contexts/ThemeContext.ts'
+import Loading from './Loading.tsx'
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
     const [locale, setLocale] = useState<string>('en')
     const [theme, setTheme] = useState<string>('light')
+    const [loading, setLoading] = useState<boolean>(true)
     const userAuthContextValue = useMemo(() => {
         return {
             user
@@ -56,6 +58,7 @@ export default function NotesApp() {
         getUserLogged().then(({error, data}) => {
             if (error) (setUser({id: '', name: '', email: ''}))
             if (!error) setUser(data)
+            setLoading(false)
         })
     }, [])
 
@@ -102,6 +105,9 @@ export default function NotesApp() {
             </LocaleProvider>
         </ThemeProvider>
     )
+    if (loading) {
+        return <Loading />
+    }
 
     return user.id === '' ? not_authed : authed
 }
