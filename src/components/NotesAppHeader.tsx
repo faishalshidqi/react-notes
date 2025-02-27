@@ -10,6 +10,7 @@ export default function NotesAppHeader({onLogout}: {onLogout: () => void}) {
             <h1>
                 <Link to='/'>Notes App</Link>
             </h1>
+            <Navigation onLogout={onLogout} />
         </header>
     )
     const authed = (
