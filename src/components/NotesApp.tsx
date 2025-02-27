@@ -9,7 +9,7 @@ import {useState, useEffect, useMemo} from 'react'
 import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
 import {getUserLogged, putAccessToken} from '../utils/data.ts'
-import UserAuthContext from '../contexts/UserAuthContext.ts'
+import UserAuthContext, {UserAuthProvider} from '../contexts/UserAuthContext.ts'
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
@@ -36,7 +36,7 @@ export default function NotesApp() {
     }, [])
 
     const not_authed = (
-        <UserAuthContext.Provider value={userAuthContextValue.user}>
+        <UserAuthProvider value={userAuthContextValue.user}>
             <div className='app-container'>
                 <NotesAppHeader onLogout={onLogout} />
                 <main>
@@ -47,7 +47,7 @@ export default function NotesApp() {
                     </Routes>
                 </main>
             </div>
-        </UserAuthContext.Provider>
+        </UserAuthProvider>
     )
 
     const authed = (
