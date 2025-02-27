@@ -11,7 +11,6 @@ export default function NotesList({notes, onDelete, onArchive}: {notes: {id: str
                     <NoteItem {...note} key={note.id} onDelete={onDelete} onArchive={onArchive} />
                 ))
             }
-            <div className='act'></div>
         </section>
     )
 }
