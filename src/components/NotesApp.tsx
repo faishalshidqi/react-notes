@@ -8,10 +8,15 @@ import NotFoundPage from '../pages/NotFoundPage.tsx'
 import {useState, useEffect} from 'react'
 import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
-import {getUserLogged} from "../utils/data.ts";
+import {getUserLogged, putAccessToken} from "../utils/data.ts";
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
+    async function onSuccessLogin({accessToken}: {accessToken: string}) {
+        putAccessToken(accessToken)
+        const {data} = await getUserLogged()
+        setUser(data)
+    }
     useEffect(() => {
         getUserLogged().then(({error, data}) => {
             if (!error) setUser(data)
@@ -24,7 +29,7 @@ export default function NotesApp() {
                 <NotesAppHeader />
                 <main>
                     <Routes>
-                        <Route path='/' element={<LoginPage/>} />
+                        <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
                         <Route path='/register' element={<RegisterPage/>} />
                         <Route path='*' element={<NotFoundPage/>}/>
                     </Routes>
