@@ -64,7 +64,7 @@ export default function NotesApp() {
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme)
-    }, [theme]);
+    }, [theme])
 
     const not_authed = (
         <ThemeProvider value={themeContextValue}>
