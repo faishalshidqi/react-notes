@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 const LocaleContext = React.createContext({locale: 'en', toggleLocale: () => {}})
 export const LocaleProvider = LocaleContext.Provider
