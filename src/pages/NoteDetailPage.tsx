@@ -6,19 +6,19 @@ import {useNavigate, useParams} from 'react-router-dom'
 export default function DetailPageWrapper() {
     const {id} = useParams()
     const navigate = useNavigate()
-    function onDeleteHandler() {
+    async function onDeleteHandler() {
         if (id != null) {
-            deleteNote(id)
+            await deleteNote(id)
         }
         navigate('/')
     }
-    function onArchiveHandler() {
+    async function onArchiveHandler() {
         if (id != null) {
-            const note = getNote(id)
-            if (!note!.archived) {
-                archiveNote(id)
+            const {data} = await getNote(id)
+            if (!data.archived) {
+                await archiveNote(id)
             } else {
-                unarchiveNote(id)
+                await unarchiveNote(id)
             }
         }
         navigate('/')
@@ -30,7 +30,7 @@ class DetailPage extends Component<{id: string, onDelete: (id: string) => void, 
     constructor(props: {id: string, onDelete: (id: string) => void, onArchive: (id: string) => void}) {
         super(props)
         this.state = {
-            note: getNote(props.id)
+            note: {id: '', title: '', body: '', createdAt: '', archived: false},
         }
         this.onArchiveHandler = this.onArchiveHandler.bind(this)
         this.onDeleteHandler = this.onDeleteHandler.bind(this)
@@ -40,6 +40,14 @@ class DetailPage extends Component<{id: string, onDelete: (id: string) => void, 
     }
     onDeleteHandler(id: string) {
         this.props.onDelete(id)
+    }
+    async componentDidMount() {
+        const {data} = await getNote(this.props.id)
+        this.setState(() => {
+            return {
+                note: data
+            }
+        })
     }
     render() {
         return (
