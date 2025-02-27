@@ -24,33 +24,33 @@ export default function NotesApp() {
         })
     }, [])
 
-    if (user.id === '') {
-        return (
-            <div className='app-container'>
-                <NotesAppHeader />
-                <main>
-                    <Routes>
-                        <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
-                        <Route path='/register' element={<RegisterPage/>} />
-                        <Route path='*' element={<NotFoundPage/>}/>
-                    </Routes>
-                </main>
-            </div>
-        )
-    } else {
-        return (
-            <div className='app-container'>
-                <NotesAppHeader />
-                <main>
-                    <Routes>
-                        <Route path='/' element={<HomePage/>} />
-                        <Route path='/archives' element={<ArchivePage/>} />
-                        <Route path='/notes/:id' element={<DetailPageWrapper/>} />
-                        <Route path='/notes/new' element={<AddNotePage/>}/>
-                        <Route path='*' element={<NotFoundPage/>}/>
-                    </Routes>
-                </main>
-            </div>
-        )
-    }
+    const not_authed = (
+        <div className='app-container'>
+            <NotesAppHeader />
+            <main>
+                <Routes>
+                    <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
+                    <Route path='/register' element={<RegisterPage/>} />
+                    <Route path='*' element={<NotFoundPage/>}/>
+                </Routes>
+            </main>
+        </div>
+    )
+
+    const authed = (
+        <div className='app-container'>
+            <NotesAppHeader />
+            <main>
+                <Routes>
+                    <Route path='/' element={<HomePage/>} />
+                    <Route path='/archives' element={<ArchivePage/>} />
+                    <Route path='/notes/:id' element={<DetailPageWrapper/>} />
+                    <Route path='/notes/new' element={<AddNotePage/>}/>
+                    <Route path='*' element={<NotFoundPage/>}/>
+                </Routes>
+            </main>
+        </div>
+    )
+
+    return user.id === '' ? not_authed : authed
 }
