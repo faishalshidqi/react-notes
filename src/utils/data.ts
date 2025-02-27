@@ -1,106 +1,163 @@
-let notes = [
-    {
-        id: 'notes-1',
-        title: 'Babel',
-        body: 'Babel merupakan tools open-source yang digunakan untuk mengubah sintaks ECMAScript 2015+ menjadi sintaks yang didukung oleh JavaScript engine versi lama. Babel sering dipakai ketika kita menggunakan sintaks terbaru termasuk sintaks JSX.',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-    {
-        id: 'notes-2',
-        title: 'Functional Component',
-        body: 'Functional component merupakan React component yang dibuat menggunakan fungsi JavaScript. Agar fungsi JavaScript dapat disebut component ia harus mengembalikan React element dan dipanggil layaknya React component.',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-    {
-        id: 'notes-3',
-        title: 'Modularization',
-        body: 'Dalam konteks pemrograman JavaScript, modularization merupakan teknik dalam memecah atau menggunakan kode dalam berkas JavaScript secara terpisah berdasarkan tanggung jawabnya masing-masing.',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-    {
-        id: 'notes-4',
-        title: 'Lifecycle',
-        body: 'Dalam konteks React component, lifecycle merupakan kumpulan method yang menjadi siklus hidup mulai dari component dibuat (constructor), dicetak (render), pasca-cetak (componentDidMount), dan sebagainya. ',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-    {
-        id: 'notes-5',
-        title: 'ESM',
-        body: 'ESM (ECMAScript Module) merupakan format modularisasi standar JavaScript.',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-    {
-        id: 'notes-6',
-        title: 'Module Bundler',
-        body: 'Dalam konteks pemrograman JavaScript, module bundler merupakan tools yang digunakan untuk menggabungkan seluruh modul JavaScript yang digunakan oleh aplikasi menjadi satu berkas.',
-        createdAt: '2022-04-14T04:27:34.572Z',
-        archived: false,
-    },
-]
+const BASE_URL = 'https://notes-api.dicoding.dev/v1'
 
-function getAllNotes() {
-    return notes
+function getAccessToken() {
+    return localStorage.getItem('accessToken')
 }
 
-function getNote(id: string) {
-    return notes.find((note) => note.id === id)
+function putAccessToken(accessToken: string) {
+    return localStorage.setItem('accessToken', accessToken)
 }
 
-function getActiveNotes() {
-    return notes.filter((note) => !note.archived)
-}
-
-function getArchivedNotes() {
-    return notes.filter((note) => note.archived)
-}
-
-function addNote({ title, body }: { title: string, body: string }) {
-    notes = [...notes, {
-        id: `notes-${+new Date()}`, title: title || '(untitled)', body, createdAt: new Date().toISOString(), archived: false,
-    }]
-}
-
-function deleteNote(id: string) {
-    notes = notes.filter((note) => note.id !== id)
-}
-
-function archiveNote(id: string) {
-    notes = notes.map((note) => {
-        if (note.id === id) {
-            return { ...note, archived: true }
-        }
-        return note
+async function fetchWithToken(url: string, options: {headers?: object, method: 'GET'|'POST'|'PUT'|'DELETE', body?: string} = {headers: {}, method: 'GET'}) {
+    return fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            Authorization: `Bearer ${getAccessToken()}`,
+        },
     })
 }
 
-function unarchiveNote(id: string) {
-    notes = notes.map((note) => {
-        if (note.id === id) {
-            return { ...note, archived: false }
-        }
-
-        return note
+async function login({ email, password }: { email: string, password: string }) {
+    const response = await fetch(`${BASE_URL}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
     })
-}
 
-function editNote({ id, title, body }: {id: string, title: string, body: string }) {
-    const noteToEdit = notes.find((note) => note.id === id)
-    if (noteToEdit !== undefined) {
-        noteToEdit!.title = title
-        noteToEdit!.body = body
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true, data: null }
     }
 
-    notes = notes.map((note) => {
-        if (note.id === id) {
-            return note
-        }
-        return note
+    return { error: false, data: responseJson.data }
+}
+
+async function register({ name, email, password }: {name: string, email: string, password: string }) {
+    const response = await fetch(`${BASE_URL}/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
     })
+
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true }
+    }
+
+    return { error: false }
+}
+
+async function getUserLogged() {
+    const response = await fetchWithToken(`${BASE_URL}/users/me`)
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function addNote({ title, body }: { title: string, body: string }) {
+    const response = await fetchWithToken(`${BASE_URL}/notes`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ title, body }),
+    })
+
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function getActiveNotes() {
+    const response = await fetchWithToken(`${BASE_URL}/notes`)
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function getArchivedNotes() {
+    const response = await fetchWithToken(`${BASE_URL}/notes/archived`)
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function getNote(id: string) {
+    const response = await fetchWithToken(`${BASE_URL}/notes/${id}`)
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function archiveNote(id: string) {
+    const response = await fetchWithToken(`${BASE_URL}/notes/${id}/archive`, {
+        method: 'POST',
+    })
+
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function unarchiveNote(id: string) {
+    const response = await fetchWithToken(`${BASE_URL}/notes/${id}/unarchive`, {
+        method: 'POST',
+    })
+
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+async function deleteNote(id: string) {
+    const response = await fetchWithToken(`${BASE_URL}/notes/${id}`, {
+        method: 'DELETE',
+    })
+
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
 }
 
 const showFormattedDate = (date: string) => {
@@ -113,11 +170,14 @@ const showFormattedDate = (date: string) => {
 }
 
 export {
-    getAllNotes,
+    getAccessToken,
+    putAccessToken,
+    login,
+    register,
+    getUserLogged,
     getActiveNotes,
     getArchivedNotes,
     deleteNote,
-    editNote,
     getNote,
     archiveNote,
     unarchiveNote,
