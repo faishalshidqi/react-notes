@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {LocaleConsumer} from "../contexts/LocaleContext.ts";
+import {LocaleConsumer} from '../contexts/LocaleContext.ts'
 
 export default class SearchBar extends Component<{ searchNotes: ({keyword}: { keyword: string }) => void }, {keyword: string}> {
     constructor(props: { searchNotes: ({ keyword }: { keyword: string }) => void }) {

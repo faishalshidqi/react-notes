@@ -2,7 +2,7 @@ import RegisterInput from '../components/RegisterInput'
 import {Link, useNavigate} from 'react-router-dom'
 import {register} from '../utils/data.ts'
 import {useContext} from 'react'
-import LocaleContext from "../contexts/LocaleContext.ts";
+import LocaleContext from '../contexts/LocaleContext.ts'
 
 export default function RegisterPage() {
     const localeContext = useContext(LocaleContext)
