@@ -7,7 +7,7 @@ export default class ArchivePage extends Component<unknown, {notes: {id: string,
     constructor(props: unknown) {
         super(props)
         this.state = {
-            notes: getArchivedNotes(),
+            notes: [],
             keyword: '',
         }
         this.onDeleteHandler = this.onDeleteHandler.bind(this)
@@ -17,19 +17,30 @@ export default class ArchivePage extends Component<unknown, {notes: {id: string,
     onSearchHandler({keyword}: { keyword: string }) {
         this.setState(() => ({keyword: keyword}))
     }
-    onDeleteHandler(id: string){
-        deleteNote(id)
+    async onDeleteHandler(id: string){
+        await deleteNote(id)
+        const {data} = await getArchivedNotes()
         this.setState(() => {
             return {
-                notes: getArchivedNotes()
+                notes: data
             }
         })
     }
-    onArchiveHandler(id: string){
-        unarchiveNote(id)
+    async onArchiveHandler(id: string){
+        await unarchiveNote(id)
+        const {data} = await getArchivedNotes()
         this.setState(() => {
             return {
-                notes: getArchivedNotes()
+                notes: data
+            }
+        })
+    }
+
+    async componentDidMount() {
+        const {data} = await getArchivedNotes()
+        this.setState(() => {
+            return {
+                notes: data
             }
         })
     }
