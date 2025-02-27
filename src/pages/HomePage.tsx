@@ -3,6 +3,7 @@ import {Component} from 'react'
 import AddNoteButton from '../components/AddNoteButton.tsx'
 import {archiveNote, deleteNote, getActiveNotes} from '../utils/data.ts'
 import SearchBar from '../components/SearchBar.tsx'
+import {LocaleConsumer} from '../contexts/LocaleContext.ts'
 
 export default class HomePage extends Component<unknown, { notes: { id: string, title: string, body: string, createdAt: string, archived: boolean }[], keyword: string }> {
     constructor(props: unknown) {
@@ -48,14 +49,22 @@ export default class HomePage extends Component<unknown, { notes: { id: string, 
     render() {
         const notes = this.state.notes.filter(note => note.title.toLowerCase().includes(this.state.keyword.toLowerCase()))
         return (
-            <section className='homepage'>
-                <h2>Active Notes</h2>
-                <SearchBar searchNotes={this.onSearchHandler}/>
-                <NotesList notes={notes} onArchive={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
-                <div className='homepage__action'>
-                    <AddNoteButton/>
-                </div>
-            </section>
+            <LocaleConsumer>
+                {
+                    ({locale}) => {
+                        return (
+                            <section className='homepage'>
+                                <h2>{locale === 'en' ? 'Active Notes' : 'Catatan Aktif'}</h2>
+                                <SearchBar searchNotes={this.onSearchHandler}/>
+                                <NotesList notes={notes} onArchive={this.onArchiveHandler} onDelete={this.onDeleteHandler} />
+                                <div className='homepage__action'>
+                                    <AddNoteButton/>
+                                </div>
+                            </section>
+                        )
+                    }
+                }
+            </LocaleConsumer>
         )
     }
 }

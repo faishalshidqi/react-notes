@@ -10,14 +10,27 @@ import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
 import {getUserLogged, putAccessToken} from '../utils/data.ts'
 import UserAuthContext, {UserAuthProvider} from '../contexts/UserAuthContext.ts'
+import {LocaleProvider} from "../contexts/LocaleContext.ts";
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
+    const [locale, setLocale] = useState<string>('en')
     const userAuthContextValue = useMemo(() => {
         return {
             user
         }
     }, [user])
+    const localeContextValue = useMemo(() => {
+        return {
+            locale: localStorage.getItem('locale') || 'en',
+            toggleLocale: () => {
+                const newLocale = localStorage.getItem('locale') === 'en' ? 'id' : 'en'
+                console.log(`Locale: ${newLocale}`)
+                localStorage.setItem('locale', newLocale)
+                setLocale(newLocale)
+            }
+        }
+    }, [locale])
     async function onSuccessLogin({accessToken}: {accessToken: string}) {
         putAccessToken(accessToken)
         const {data} = await getUserLogged()
@@ -36,35 +49,39 @@ export default function NotesApp() {
     }, [])
 
     const not_authed = (
-        <UserAuthProvider value={userAuthContextValue.user}>
-            <div className='app-container'>
-                <NotesAppHeader onLogout={onLogout} />
-                <main>
-                    <Routes>
-                        <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
-                        <Route path='/register' element={<RegisterPage/>} />
-                        <Route path='*' element={<NotFoundPage/>}/>
-                    </Routes>
-                </main>
-            </div>
-        </UserAuthProvider>
+        <LocaleProvider value={localeContextValue}>
+            <UserAuthProvider value={userAuthContextValue.user}>
+                <div className='app-container'>
+                    <NotesAppHeader onLogout={onLogout} />
+                    <main>
+                        <Routes>
+                            <Route path='/' element={<LoginPage onSuccessLogin={onSuccessLogin}/>} />
+                            <Route path='/register' element={<RegisterPage/>} />
+                            <Route path='*' element={<NotFoundPage/>}/>
+                        </Routes>
+                    </main>
+                </div>
+            </UserAuthProvider>
+        </LocaleProvider>
     )
 
     const authed = (
-        <UserAuthContext.Provider value={user}>
-            <div className='app-container'>
-                <NotesAppHeader onLogout={onLogout} />
-                <main>
-                    <Routes>
-                        <Route path='/' element={<HomePage/>} />
-                        <Route path='/archives' element={<ArchivePage/>} />
-                        <Route path='/notes/:id' element={<DetailPageWrapper/>} />
-                        <Route path='/notes/new' element={<AddNotePage/>}/>
-                        <Route path='*' element={<NotFoundPage/>}/>
-                    </Routes>
-                </main>
-            </div>
-        </UserAuthContext.Provider>
+        <LocaleProvider value={localeContextValue}>
+            <UserAuthContext.Provider value={user}>
+                <div className='app-container'>
+                    <NotesAppHeader onLogout={onLogout} />
+                    <main>
+                        <Routes>
+                            <Route path='/' element={<HomePage/>} />
+                            <Route path='/archives' element={<ArchivePage/>} />
+                            <Route path='/notes/:id' element={<DetailPageWrapper/>} />
+                            <Route path='/notes/new' element={<AddNotePage/>}/>
+                            <Route path='*' element={<NotFoundPage/>}/>
+                        </Routes>
+                    </main>
+                </div>
+            </UserAuthContext.Provider>
+        </LocaleProvider>
     )
 
     return user.id === '' ? not_authed : authed
