@@ -8,7 +8,7 @@ export default class HomePage extends Component<unknown, { notes: { id: string, 
     constructor(props: unknown) {
         super(props)
         this.state = {
-            notes: getActiveNotes(),
+            notes: [],
             keyword: '',
         }
         this.onDeleteHandler = this.onDeleteHandler.bind(this)
@@ -18,19 +18,30 @@ export default class HomePage extends Component<unknown, { notes: { id: string, 
     onSearchHandler({keyword}: { keyword: string }) {
         this.setState(() => ({keyword: keyword}))
     }
-    onDeleteHandler(id: string){
-        deleteNote(id)
+    async onDeleteHandler(id: string){
+        await deleteNote(id)
+        const {data} = await getActiveNotes()
         this.setState(() => {
             return {
-                notes: getActiveNotes()
+                notes: data
+            }
+        })
+
+    }
+    async onArchiveHandler(id: string){
+        await archiveNote(id)
+        const {data} = await getActiveNotes()
+        this.setState(() => {
+            return {
+                notes: data
             }
         })
     }
-    onArchiveHandler(id: string){
-        archiveNote(id)
+    async componentDidMount() {
+        const {data} = await getActiveNotes()
         this.setState(() => {
             return {
-                notes: getActiveNotes()
+                notes: data
             }
         })
     }
