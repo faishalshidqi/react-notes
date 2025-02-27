@@ -10,8 +10,8 @@ import LoginPage from '../pages/LoginPage.tsx'
 import RegisterPage from '../pages/RegisterPage.tsx'
 import {getUserLogged, putAccessToken} from '../utils/data.ts'
 import {UserAuthProvider} from '../contexts/UserAuthContext.ts'
-import {LocaleProvider} from "../contexts/LocaleContext.ts";
-import {ThemeProvider} from "../contexts/ThemeContext.ts";
+import {LocaleProvider} from '../contexts/LocaleContext.ts'
+import {ThemeProvider} from '../contexts/ThemeContext.ts'
 
 export default function NotesApp() {
     const [user, setUser] = useState<{id: string, name: string, email: string}>({id: '', name: '', email: ''})
@@ -59,6 +59,10 @@ export default function NotesApp() {
         })
     }, [])
 
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme)
+    }, [theme]);
+
     const not_authed = (
         <ThemeProvider value={themeContextValue}>
             <LocaleProvider value={localeContextValue}>
@@ -79,22 +83,24 @@ export default function NotesApp() {
     )
 
     const authed = (
-        <LocaleProvider value={localeContextValue}>
-            <UserAuthProvider value={user}>
-                <div className='app-container'>
-                    <NotesAppHeader onLogout={onLogout} />
-                    <main>
-                        <Routes>
-                            <Route path='/' element={<HomePage/>} />
-                            <Route path='/archives' element={<ArchivePage/>} />
-                            <Route path='/notes/:id' element={<DetailPageWrapper/>} />
-                            <Route path='/notes/new' element={<AddNotePage/>}/>
-                            <Route path='*' element={<NotFoundPage/>}/>
-                        </Routes>
-                    </main>
-                </div>
-            </UserAuthProvider>
-        </LocaleProvider>
+        <ThemeProvider value={themeContextValue}>
+            <LocaleProvider value={localeContextValue}>
+                <UserAuthProvider value={user}>
+                    <div className='app-container'>
+                        <NotesAppHeader onLogout={onLogout} />
+                        <main>
+                            <Routes>
+                                <Route path='/' element={<HomePage/>} />
+                                <Route path='/archives' element={<ArchivePage/>} />
+                                <Route path='/notes/:id' element={<DetailPageWrapper/>} />
+                                <Route path='/notes/new' element={<AddNotePage/>}/>
+                                <Route path='*' element={<NotFoundPage/>}/>
+                            </Routes>
+                        </main>
+                    </div>
+                </UserAuthProvider>
+            </LocaleProvider>
+        </ThemeProvider>
     )
 
     return user.id === '' ? not_authed : authed
